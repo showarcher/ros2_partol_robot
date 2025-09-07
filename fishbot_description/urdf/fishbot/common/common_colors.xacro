@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    
+    <!-- 机器人颜色定义文件 Robot Color Definitions -->
+    <!-- 使用方法:<xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_colors.xacro"/> -->
+    
+    <!-- 基础颜色 Basic Colors -->
+    <material name="red_material">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+    </material>
+    
+    <material name="blue_material">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+    </material>
+    
+    <material name="green_material">
+        <color rgba="0.0 1.0 0.0 1.0"/>
+    </material>
+    
+    <material name="yellow_material">
+        <color rgba="1.0 1.0 0.0 1.0"/>
+    </material>
+    
+    <material name="orange_material">
+        <color rgba="1.0 0.5 0.0 1.0"/>
+    </material>
+    
+    <material name="purple_material">
+        <color rgba="0.5 0.0 0.5 1.0"/>
+    </material>
+    
+    <material name="pink_material">
+        <color rgba="1.0 0.5 0.8 1.0"/>
+    </material>
+    
+    <material name="cyan_material">
+        <color rgba="0.0 1.0 1.0 1.0"/>
+    </material>
+    
+    <!-- 深色系列 Dark Colors -->
+    <material name="dark_red_material">
+        <color rgba="0.8 0.0 0.0 1.0"/>
+    </material>
+    
+    <material name="dark_blue_material">
+        <color rgba="0.0 0.0 0.8 1.0"/>
+    </material>
+    
+    <material name="dark_green_material">
+        <color rgba="0.0 0.8 0.0 1.0"/>
+    </material>
+    
+    <material name="dark_yellow_material">
+        <color rgba="0.8 0.8 0.0 1.0"/>
+    </material>
+    
+    <!-- 浅色系列 Light Colors -->
+    <material name="light_red_material">
+        <color rgba="1.0 0.5 0.5 1.0"/>
+    </material>
+    
+    <material name="light_blue_material">
+        <color rgba="0.5 0.5 1.0 1.0"/>
+    </material>
+    
+    <material name="light_green_material">
+        <color rgba="0.5 1.0 0.5 1.0"/>
+    </material>
+    
+    <material name="light_yellow_material">
+        <color rgba="1.0 1.0 0.5 1.0"/>
+    </material>
+    
+    <!-- 灰度系列 Gray Scale -->
+    <material name="white_material">
+        <color rgba="1.0 1.0 1.0 1.0"/>
+    </material>
+    
+    <material name="light_gray_material">
+        <color rgba="0.8 0.8 0.8 1.0"/>
+    </material>
+    
+    <material name="gray_material">
+        <color rgba="0.5 0.5 0.5 1.0"/>
+    </material>
+    
+    <material name="dark_gray_material">
+        <color rgba="0.3 0.3 0.3 1.0"/>
+    </material>
+    
+    <material name="black_material">
+        <color rgba="0.0 0.0 0.0 1.0"/>
+    </material>
+    
+    <!-- 金属色 Metallic Colors -->
+    <material name="gold_material">
+        <color rgba="1.0 0.8 0.0 1.0"/>
+    </material>
+    
+    <material name="silver_material">
+        <color rgba="0.75 0.75 0.75 1.0"/>
+    </material>
+    
+    <material name="bronze_material">
+        <color rgba="0.8 0.5 0.2 1.0"/>
+    </material>
+    
+    <material name="copper_material">
+        <color rgba="0.7 0.4 0.1 1.0"/>
+    </material>
+    
+    <!-- 机器人专用色 Robot Specific Colors -->
+    <material name="robot_base_material">
+        <color rgba="0.2 0.2 0.2 1.0"/>
+    </material>
+    
+    <material name="wheel_material">
+        <color rgba="0.1 0.1 0.1 1.0"/>
+    </material>
+    
+    <material name="sensor_material">
+        <color rgba="0.0 0.3 0.8 1.0"/>
+    </material>
+    
+    <material name="lidar_material">
+        <color rgba="0.8 0.0 0.0 1.0"/>
+    </material>
+    
+    <material name="camera_material">
+        <color rgba="0.1 0.1 0.1 1.0"/>
+    </material>
+    
+    <!-- 特殊颜色 Special Colors -->
+    <material name="sky_blue_material">
+        <color rgba="0.5 0.8 1.0 1.0"/>
+    </material>
+    
+    <material name="forest_green_material">
+        <color rgba="0.2 0.8 0.2 1.0"/>
+    </material>
+    
+    <material name="hot_pink_material">
+        <color rgba="1.0 0.4 0.7 1.0"/>
+    </material>
+    
+    <material name="magenta_material">
+        <color rgba="1.0 0.0 1.0 1.0"/>
+    </material>
+    
+    <!-- 半透明色 Transparent Colors -->
+    <material name="transparent_red_material">
+        <color rgba="1.0 0.0 0.0 0.5"/>
+    </material>
+    
+    <material name="transparent_blue_material">
+        <color rgba="0.0 0.0 1.0 0.5"/>
+    </material>
+    
+    <material name="transparent_green_material">
+        <color rgba="0.0 1.0 0.0 0.5"/>
+    </material>
+    
+    <material name="transparent_yellow_material">
+        <color rgba="1.0 1.0 0.0 0.5"/>
+    </material>
+
+</robot>

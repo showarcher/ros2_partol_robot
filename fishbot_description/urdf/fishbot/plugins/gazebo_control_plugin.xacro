@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <!-- 定义一个 xacro 宏，名称为 gazebo_control_plugin 以后可以在其他 URDF/Xacro 文件中调用这个宏来加载差速驱动插件 -->
+    <xacro:macro name="gazebo_control_plugin">
+
+        <!-- Gazebo 中的插件定义 -->
+        <gazebo>
+            <!-- 插件配置：
+                 name='diff_drive'                          → 插件在 Gazebo 中的名称
+                 filename='libgazebo_ros_diff_drive.so'     → 差速驱动插件的共享库文件 -->
+            <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+
+                <!-- ROS 相关设置 -->
+                <ros>
+                    <!-- namespace 表示 ROS 命名空间，这里是根目录 '/' -->
+                    <namespace>/</namespace>
+                    <!-- topic 话题重映射：将插件内部的 cmd_vel 绑定到 ROS 的 cmd_vel 话题 -->
+                    <remapping>cmd_vel:=cmd_vel</remapping>
+                    <!-- 将插件生成的里程计 odom 数据绑定到 ROS 的 odom 话题 -->
+                    <remapping>odom:=odom</remapping>
+                </ros>
+
+                <!-- 插件的更新频率（Hz），即每秒更新 30 次 -->
+                <update_rate>30</update_rate>
+
+                <!-- 绑定的车轮关节 -->
+                <left_joint>left_wheel_joint</left_joint>    <!-- 左轮关节名称 -->
+                <right_joint>right_wheel_joint</right_joint> <!-- 右轮关节名称 -->
+
+                <!-- 差速驱动学参数 -->
+                <wheel_separation>0.2</wheel_separation>  <!-- 左右轮间距（米） -->
+                <wheel_diameter>0.064</wheel_diameter>    <!-- 车轮直径（米） -->
+
+                <!-- 运动限制 -->
+                <max_wheel_torque>20</max_wheel_torque>              <!-- 最大轮子扭矩（Nm） -->
+                <max_wheel_acceleration>1.0</max_wheel_acceleration> <!-- 最大轮子加速度（m/s²） -->
+
+                <!-- 输出控制 -->
+                <publish_odom>true</publish_odom>         <!-- 是否发布里程计数据 -->
+                <publish_odom_tf>true</publish_odom_tf>   <!-- 是否发布里程计到 base_link 的 TF -->
+                <publish_wheel_tf>true</publish_wheel_tf> <!-- 是否发布轮子相关的 TF -->
+
+                <!-- 坐标系设置 -->
+                <odometry_frame>odom</odometry_frame>               <!-- 里程计坐标系名称 -->
+                <robot_base_frame>base_footprint</robot_base_frame> <!-- 机器人底盘坐标系 -->
+            </plugin>
+        </gazebo>
+   </xacro:macro>
+</robot>

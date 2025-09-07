@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!-- base部分子文件 -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_inertia.xacro"/>
+
+    <!-- 1.基本模型添加 -->
+    <xacro:macro name="base_xacro" params="length radius">
+        <!-- 1.1添加base_footprint链接作为根链接 -->
+        <link name="base_footprint">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.001 0.001 0.001"/>
+                </geometry>
+            </visual>
+        </link>
+
+        <!-- 1.2添加base_joint连接base_footprint到base_link -->
+        <joint name="base_joint" type="fixed">
+            <parent link="base_footprint"/>
+            <child link="base_link"/>
+            <origin xyz="0.0 0.0 ${length/2}" rpy="0 0 0"/>
+        </joint>
+
+        <link name="base_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${length}"/>
+                </geometry>
+                <material name="red_material"/>
+            </visual>
+
+            <!-- 2.碰撞属性collision添加 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="${radius}" length="${length}"/>
+                </geometry>
+                <material name="red_material"/>
+            </collision>
+
+            <!-- 3.质量和惯性属性添加 -->
+            <xacro:cylinder_inertia m="1.0" r="${radius}" h="${length}"/>
+        </link>
+
+        <!-- 4.gazebo中显示，扩展URDF文件 -->
+        <gazebo reference="base_link">
+            <material>Gazebo/Red</material>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

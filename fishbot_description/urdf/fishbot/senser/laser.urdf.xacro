@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!-- 机器人laser雷达模块 -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_inertia.xacro"/>
+
+    <!-- 1.基本模型添加 -->
+    <xacro:macro name="laser_xacro" params="xyz">
+        <!-- 1.1雷达支撑杆 -->
+        <link name="laser_cylinder_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.01" length="0.1"/>
+                </geometry>
+                <material name="blue_material"/>
+            </visual>
+
+            <!-- 2.1碰撞属性collision添加 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.01" length="0.1"/>
+                </geometry>
+                <material name="blue_material"/>
+            </collision>
+
+            <!-- 3.1质量和惯性属性添加 -->
+            <xacro:cylinder_inertia m="0.05" r="0.01" h="0.10"/>
+        </link>
+
+        <!-- 1.2雷达 -->
+        <link name="laser_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.02" length="0.02"/>
+                </geometry>
+                <material name="green_material"/>
+            </visual>
+
+            <!-- 2.2碰撞属性collision添加 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder radius="0.02" length="0.02"/>
+                </geometry>
+                <material name="green_material"/>
+            </collision>
+
+            <!-- 3.2质量和惯性属性添加 -->
+            <xacro:cylinder_inertia m="0.10" r="0.02" h="0.02"/>
+        </link>
+
+        <!-- 4.1雷达固定到支撑杆上 -->
+        <joint name="laser_joint" type="fixed">
+            <parent link="laser_cylinder_link"/>
+            <child link="laser_link"/>
+            <origin xyz="0.0 0.0 0.05" rpy="0 0 0"/>
+        </joint>
+
+        <!-- 4.2雷达支撑杆固定到base_link -->
+        <joint name="laser_cylinder_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="laser_cylinder_link"/>
+            <!-- 用户自定义组装  雷达+雷达支撑杆的位置：${xyz}  -->
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+        </joint>
+        
+
+        <!-- 5.gazebo中显示，扩展URDF文件 -->
+        <gazebo reference="laser_cylinder_link">
+            <material>Gazebo/Blue</material>
+        </gazebo>
+        <gazebo reference="laser_link">
+            <material>Gazebo/Green</material>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

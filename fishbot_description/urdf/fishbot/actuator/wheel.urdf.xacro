@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!-- 机器人wheel车轮模块 -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_inertia.xacro"/>
+
+    <!-- 1.基本模型添加 -->
+    <xacro:macro name="wheel_xacro" params="wheel_name xyz">
+        <link name="${wheel_name}_link">
+            <visual>
+            <!-- 旋转90度 -->
+                <origin xyz="0 0 0" rpy="1.57079 0 0"/>
+                <geometry>
+                    <cylinder radius="0.032" length="0.04"/>
+                </geometry>
+                <material name="yellow_material"/>
+            </visual>
+
+            <!-- 2.碰撞属性collision添加 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="1.57079 0 0"/>
+                <geometry>
+                    <cylinder radius="0.032" length="0.04"/>
+                </geometry>
+                <material name="yellow_material"/>
+            </collision>
+            
+            <!-- 3.质量和惯性属性添加 -->
+            <xacro:cylinder_inertia m="0.05" r="0.032" h="0.04"/>
+        </link>
+
+        <joint name="${wheel_name}_joint" type="continuous">
+            <parent link="base_link"/>
+            <child link="${wheel_name}_link"/>
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+            <!-- 绕哪个轴旋转:y轴 -->
+            <axis xyz="0 1 0"/>
+        </joint>
+        
+
+        <!-- 4.gazebo中显示，扩展URDF文件——给车轮添加物理属性(以下属性gazebo中默认为1.0) -->
+        <gazebo reference="${wheel_name}_link">
+            <material>Gazebo/Yellow</material>
+            <!-- 切向摩擦系数 -->
+            <mu1 value="20.0"/>
+            <!-- 法向摩擦系数 -->
+            <mu2 value="20.0"/>
+            <!-- 接触刚度系数 -->
+            <kp value="1000000000.0"/>
+            <!-- 接触阻尼系数 -->
+            <kd value="1.0"/>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

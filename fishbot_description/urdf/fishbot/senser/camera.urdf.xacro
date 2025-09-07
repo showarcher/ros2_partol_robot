@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!-- 机器人camera相机模块 -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_inertia.xacro"/>
+    
+    <!-- 1.基本模型添加 -->
+    <xacro:macro name="camera_xacro" params="xyz">
+        <link name="camera_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.02 0.10 0.02"/>
+                </geometry>
+                <material name="black_material"/>
+            </visual>
+
+            <!-- 2.碰撞属性collision添加 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="0.02 0.10 0.02"/>
+                </geometry>
+                <material name="black_material"/>
+            </collision>
+
+            <!-- 3.质量和惯性属性添加 -->
+            <xacro:box_inertia m="0.1" w="0.02" l="0.01" h="0.02" />
+        </link>
+
+        <!-- 4.深度相机辅助link -->
+        <link name="camera_optical_link"></link>
+
+        <!-- 5.1 相机与底盘固定关节 -->
+        <joint name="camera_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="camera_link"/>
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+        </joint>
+
+        <!-- 5.2 相机与辅助坐标系固定关节 -->
+        <joint name="camera_optical_joint" type="fixed">
+            <parent link="camera_link"/>
+            <child link="camera_optical_link"/>
+            <!-- 通过旋转修正坐标系，使其符合 ROS 相机标准坐标系 -->
+            <origin xyz="0 0 0" rpy="${-pi/2} 0.0 ${-pi/2}"/>
+        </joint>
+
+        <!-- 6.gazebo中显示，扩展URDF文件 -->
+        <gazebo reference="camera_link">
+            <material>Gazebo/Black</material>
+        </gazebo>
+
+    </xacro:macro>
+</robot>

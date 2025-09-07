@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!-- 机器人caster万向轮模块 -->
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+    <xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_inertia.xacro"/>
+
+    <!-- 1.基本模型添加 -->
+    <xacro:macro name="caster_xacro" params="caster_name xyz">
+        <link name="${caster_name}_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.016"/>
+                </geometry>
+                <material name="yellow_material"/>
+            </visual>
+
+            <!-- 2.碰撞属性collision添加 -->
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.016"/>
+                </geometry>
+                <material name="yellow_material"/>
+            </collision>
+            
+            <!-- 3.质量和惯性属性添加 -->
+            <xacro:sphere_inertia m="0.05" r="0.016" />
+        </link>
+
+        <joint name="${caster_name}_joint" type="fixed">
+            <parent link="base_link"/>
+            <child link="${caster_name}_link"/>
+            <origin xyz="${xyz}" rpy="0 0 0"/>
+        </joint>
+
+        <!-- 4.gazebo中显示，扩展URDF文件 -->
+        <gazebo reference="${caster_name}_link">
+            <material>Gazebo/Yellow</material>
+            <!-- 切向摩擦系数 -->
+            <mu1 value="0.0"/>
+            <!-- 法向摩擦系数 -->
+            <mu2 value="0.0"/>
+            <!-- 接触刚度系数 -->
+            <kp value="1000000000.0"/>
+            <!-- 接触阻尼系数 -->
+            <kd value="1.0"/>
+        </gazebo>
+
+
+    </xacro:macro>
+</robot>

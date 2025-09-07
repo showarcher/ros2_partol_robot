@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- 
+  Box Inertia Macro
+  Calculates inertial properties for a rectangular box
+  Parameters:
+    - l:length (x-dimension)
+    - w:width (y-dimension) 
+    - h:height (z-dimension)
+    - m:mass of the box
+  
+  Inertia tensor formulas for a box:
+    Ixx = (m/12) * (h² + w²)
+    Iyy = (m/12) * (l² + h²)  
+    Izz = (m/12) * (l² + w²)
+    Ixy = Ixz = Iyz = 0 (for box centered at origin)
+  -->
+  <xacro:macro name="box_inertia" params="l w h m">
+    <inertial>
+      <!-- Mass of the box -->
+      <mass value="${m}" />
+      
+      <!-- Inertia tensor components -->
+      <inertia 
+        ixx="${(m/12) * (h*h + w*w)}" 
+        ixy="0.0" 
+        ixz="0.0" 
+        iyy="${(m/12) * (l*l + h*h)}" 
+        iyz="0.0" 
+        izz="${(m/12) * (l*l + w*w)}" />
+    </inertial>
+  </xacro:macro>
+
+  <!-- 
+  Cylinder Inertia Macro
+  Calculates inertial properties for a cylinder
+  Parameters:
+    - m:mass of the cylinder
+    - r:radius of the cylinder
+    - h:height of the cylinder
+  
+  Inertia tensor formulas for a cylinder (axis along z):
+    Ixx = Iyy = (m/12) * (3*r² + h²)
+    Izz = (m/2) * r²
+    Ixy = Ixz = Iyz = 0 (for cylinder centered at origin)
+  -->
+  <xacro:macro name="cylinder_inertia" params="m r h">
+    <inertial>
+      <!-- Mass of the cylinder -->
+      <mass value="${m}" />
+      
+      <!-- Inertia tensor components -->
+      <inertia 
+        ixx="${(m/12) * (3*r*r + h*h)}" 
+        ixy="0" 
+        ixz="0" 
+        iyy="${(m/12) * (3*r*r + h*h)}" 
+        iyz="0" 
+        izz="${(m/2) * (r*r)}" />
+    </inertial>
+  </xacro:macro>
+
+  <!-- 
+  Sphere Inertia Macro
+  Calculates inertial properties for a sphere
+  Parameters:
+    - m:mass of the sphere
+    - r:radius of the sphere
+  
+  Inertia tensor formulas for a sphere:
+    Ixx = Iyy = Izz = (2/5) * m * r²
+    Ixy = Ixz = Iyz = 0 (for sphere centered at origin)
+  -->
+  <xacro:macro name="sphere_inertia" params="m r">
+    <inertial>
+      <!-- Mass of the sphere -->
+      <mass value="${m}" />
+      
+      <!-- Inertia tensor components -->
+      <inertia 
+        ixx="${(2/5) * m * (r*r)}" 
+        ixy="0.0" 
+        ixz="0.0" 
+        iyy="${(2/5) * m * (r*r)}" 
+        iyz="0.0" 
+        izz="${(2/5) * m * (r*r)}" />
+    </inertial>
+  </xacro:macro>
+
+</robot>

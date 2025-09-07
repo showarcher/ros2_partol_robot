@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="fishbot">
+
+<!-- 找到share目录下的该包:$(find fishbot_description) -->
+
+<!-- 通用颜色 -->
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/common/common_colors.xacro"/>
+
+<!-- 基座base部分 -->
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/base.urdf.xacro"/>
+<!-- 传感器senser部分 -->
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/senser/imu.urdf.xacro"/>
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/senser/laser.urdf.xacro"/>
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/senser/camera.urdf.xacro"/>
+<!-- 执行器actuator部分 -->
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/actuator/wheel.urdf.xacro"/>
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/actuator/caster.urdf.xacro"/>
+<!-- 插件:双轮差速、传感器（雷达、imu） -->
+<!-- ros2_control和gazebo_control同时出现，会产生冲突 -->
+<!-- <xacro:include filename="$(find fishbot_description)/urdf/fishbot/plugins/gazebo_control_plugin.xacro"/> -->
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/plugins/gazebo_sensor_plugin.xacro"/>
+<!-- 硬件控制ros2_control -->
+<xacro:include filename="$(find fishbot_description)/urdf/fishbot/fishbot.ros2_control.xacro"/>
+
+<!-- 基座 -->
+<xacro:base_xacro length="0.12" radius="0.10"/>
+
+<!-- 传感器 -->
+<xacro:imu_xacro xyz="0.0 0.0 0.02"/>
+<xacro:camera_xacro xyz="0.10 0.0 0.075"/>
+<xacro:laser_xacro xyz="0.0 0.0 0.10"/>
+
+<!-- 执行器 -->
+<xacro:wheel_xacro wheel_name="left_wheel" xyz="0 0.10 -0.06" />
+<xacro:wheel_xacro wheel_name="right_wheel" xyz="0 -0.10 -0.06" />
+<xacro:caster_xacro caster_name="front_caster" xyz="0.08 0.0 -0.076" />
+<xacro:caster_xacro caster_name="back_caster" xyz="-0.08 0.0 -0.076" />
+
+<!-- 插件:双轮差速、传感器（雷达） -->
+<!-- <xacro:gazebo_control_plugin /> -->
+<xacro:gazebo_sensor_plugin />
+
+<!-- ros2_control控制 -->
+<xacro:fishbot_ros2_control />
+
+</robot>
