@@ -80,4 +80,4 @@ ros2 launch autopatrol_robot autopatrol.launch.py
 
 ## 3.作者
 
-- [fishros](https://github.com/fishros)
+- [Archer](https://gitee.com/showarcher/ros2_partol_robot.git)
