@@ -230,6 +230,23 @@ ros2 interface show autopatrol_interfaces/srv/SpeechText
 
 ## 📷 实验过程与展示
 
+### ROS 2 · 仓库仿真与导航
+
+展示 Archer 多功能机器人、Gazebo 仓库环境，以及 RViz 中的建图与导航地图。
+
+<table>
+  <tr>
+    <td width="50%" align="center"><b>ROS 2 仓库环境</b><br><img src="docs/images/experiments/ros2/ROS2仓库地图.png" width="440" alt="ROS 2 Gazebo 仓库环境"><br>仓库俯视图，展示货架、货物堆放区与通行路线。</td>
+    <td width="50%" align="center"><b>Archer 多功能机器人</b><br><img src="docs/images/experiments/ros2/ROS2多功能机器人.png" width="440" alt="ROS 2 Archer 多功能机器人"><br>RViz 中的机器人模型，配有双臂、相机、激光雷达与移动底盘。</td>
+  </tr>
+  <tr>
+    <td align="center"><b>RViz 建图与导航地图</b><br><img src="docs/images/experiments/ros2/ROS2的RvizSLAM建图后的地图.png" width="440" alt="ROS 2 RViz 建图与导航地图"><br>仓库栅格地图、障碍物膨胀区域及机器人导航状态。</td>
+    <td align="center"><b>🎬 ROS 2 Demo 视频展示</b><br><br>视频展示位置预留<br><br>后续将在这里展示仓库建图、自主导航与巡检演示。<br><br><i>待上传</i><!-- ROS2_DEMO_VIDEO_PLACEHOLDER --></td>
+  </tr>
+</table>
+
+### ROS 1 · 早期实验过程与结果
+
 以下为早期 ROS 1 实验资料，记录系统架构、环境搭建、建图和导航过程。
 
 <table>
