@@ -1,0 +1,119 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 100  # Hz
+    use_sim_time: true
+
+    # 1.使用关节状态发布控制器
+    fishbot_joint_state_broadcaster:
+      type: joint_state_broadcaster/JointStateBroadcaster
+    # 2.使用力控制器控制轮子
+    fishbot_effort_controller:
+      type: effort_controllers/JointGroupEffortController
+    # 3.使用差速控制器控制轮子
+    fishbot_diff_drive_controller:
+      type: diff_drive_controller/DiffDriveController
+    left_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    right_arm_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    left_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+    right_gripper_controller:
+      type: joint_trajectory_controller/JointTrajectoryController
+
+# 力控制器配置
+fishbot_effort_controller:
+  ros__parameters:
+    joints:
+      - left_wheel_joint
+      - right_wheel_joint
+    command_interfaces:
+      - effort
+    state_interfaces:
+      - position
+      - velocity
+      - effort
+
+# 两轮差速控制器配置
+fishbot_diff_drive_controller:
+  ros__parameters:
+    left_wheel_names: ["left_wheel_joint"]
+    right_wheel_names: ["right_wheel_joint"]
+
+    wheel_separation: 0.20
+    #wheels_per_side: 1  # actually 2, but both are controlled by 1 signal
+    wheel_radius: 0.032
+
+    wheel_separation_multiplier: 1.0
+    left_wheel_radius_multiplier: 1.0
+    right_wheel_radius_multiplier: 1.0
+
+    publish_rate: 50.0
+    odom_frame_id: odom
+    base_frame_id: base_footprint
+    pose_covariance_diagonal : [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+    twist_covariance_diagonal: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+
+    # 使用轮子状态计算里程计。open_loop=true 只积分指令，机器人受到碰撞或
+    # 打滑后 Gazebo 实体会移动而 odom 仍保持不变，最终导致 AMCL/地图错位。
+    open_loop: false
+    # TF comes from Gazebo ground-truth odometry in simulation. Publishing
+    # wheel TF as well would create two odom->base_footprint authorities.
+    enable_odom_tf: false
+
+    cmd_vel_timeout: 0.5
+    #publish_limited_velocity: true
+    use_stamped_vel: false
+    #velocity_rolling_window_size: 10
+
+left_arm_controller:
+  ros__parameters:
+    joints:
+      - left_shoulder_joint
+      - left_elbow_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_partial_joints_goal: true
+    allow_nonzero_velocity_at_trajectory_end: false
+
+right_arm_controller:
+  ros__parameters:
+    joints:
+      - right_shoulder_joint
+      - right_elbow_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_partial_joints_goal: true
+    allow_nonzero_velocity_at_trajectory_end: false
+
+left_gripper_controller:
+  ros__parameters:
+    joints:
+      - left_gripper_left_finger_joint
+      - left_gripper_right_finger_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_partial_joints_goal: true
+    allow_nonzero_velocity_at_trajectory_end: false
+
+right_gripper_controller:
+  ros__parameters:
+    joints:
+      - right_gripper_left_finger_joint
+      - right_gripper_right_finger_joint
+    command_interfaces:
+      - position
+    state_interfaces:
+      - position
+      - velocity
+    allow_partial_joints_goal: true
+    allow_nonzero_velocity_at_trajectory_end: false
