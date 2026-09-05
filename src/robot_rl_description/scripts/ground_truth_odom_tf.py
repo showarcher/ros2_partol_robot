@@ -12,13 +12,17 @@ class GroundTruthOdomTf(Node):
     def __init__(self):
         super().__init__('ground_truth_odom_tf')
         self._broadcaster = TransformBroadcaster(self)
-        self._static_broadcaster = StaticTransformBroadcaster(self)
-        map_to_odom = TransformStamped()
-        map_to_odom.header.stamp = self.get_clock().now().to_msg()
-        map_to_odom.header.frame_id = 'map'
-        map_to_odom.child_frame_id = 'odom'
-        map_to_odom.transform.rotation.w = 1.0
-        self._static_broadcaster.sendTransform(map_to_odom)
+        # A fixed map transform is only suitable for the original room demo.
+        # Saved external maps and SLAM need AMCL/SLAM to own map -> odom.
+        self.declare_parameter('publish_map_tf', True)
+        if self.get_parameter('publish_map_tf').value:
+            self._static_broadcaster = StaticTransformBroadcaster(self)
+            map_to_odom = TransformStamped()
+            map_to_odom.header.stamp = self.get_clock().now().to_msg()
+            map_to_odom.header.frame_id = 'map'
+            map_to_odom.child_frame_id = 'odom'
+            map_to_odom.transform.rotation.w = 1.0
+            self._static_broadcaster.sendTransform(map_to_odom)
         self.create_subscription(Odometry, '/odom', self._on_odom, 20)
 
     def _on_odom(self, msg):
@@ -42,7 +46,8 @@ def main(args=None):
         pass
     finally:
         node.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 if __name__ == '__main__':

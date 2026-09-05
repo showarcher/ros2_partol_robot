@@ -1,0 +1,31 @@
+{
+  "map": {
+    "width": 275,
+    "height": 288,
+    "resolution": 0.05000000074505806
+  },
+  "camera": {
+    "width": 640,
+    "height": 480,
+    "encoding": "rgb8"
+  },
+  "scan": {
+    "beams": 360,
+    "finite_returns": 262
+  },
+  "odom_start": [
+    4.525689776989708e-05,
+    -3.497042999002398e-06,
+    0.0362246402846757
+  ],
+  "lifecycle": {
+    "planner_server": "active",
+    "controller_server": "active",
+    "bt_navigator": "active"
+  },
+  "map_pose": [
+    4.536772558569318e-05,
+    -3.5204136205303236e-06
+  ],
+  "slam_toolbox_seen": true
+}

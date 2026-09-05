@@ -1,0 +1,72 @@
+{
+  "map": {
+    "width": 318,
+    "height": 439,
+    "resolution": 0.05000000074505806
+  },
+  "camera": {
+    "width": 640,
+    "height": 480,
+    "encoding": "rgb8"
+  },
+  "scan": {
+    "beams": 360,
+    "finite_returns": 262
+  },
+  "odom_start": [
+    3.6276912152390095e-05,
+    -3.50157273024262e-06,
+    0.03622464017199109
+  ],
+  "lifecycle": {
+    "map_server": "active",
+    "amcl": "active",
+    "planner_server": "active",
+    "controller_server": "active",
+    "bt_navigator": "active"
+  },
+  "map_pose": [
+    7.217167639009732e-06,
+    -2.0628085325084874e-08
+  ],
+  "plan": {
+    "status": 4,
+    "poses": 21
+  },
+  "station_plans": [
+    {
+      "goal": [
+        -3.678,
+        9.3
+      ],
+      "status": 4,
+      "poses": 207
+    },
+    {
+      "goal": [
+        1.803,
+        9.3
+      ],
+      "status": 4,
+      "poses": 187
+    },
+    {
+      "goal": [
+        1.801,
+        -9.0
+      ],
+      "status": 4,
+      "poses": 181
+    },
+    {
+      "goal": [
+        -3.63,
+        -9.3
+      ],
+      "status": 4,
+      "poses": 187
+    }
+  ],
+  "rviz_node_seen": true,
+  "gzclient_started": true
+}

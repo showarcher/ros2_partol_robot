@@ -39,14 +39,13 @@ def generate_launch_description():
     description_share = get_package_share_directory('robot_rl_description')
     gazebo_share = get_package_share_directory('gazebo_ros')
 
-    # Migrated PAL worlds use model:// URIs.  Keep their model assets inside
-    # this package and add that directory before Gazebo resolves the world.
-    local_model_dir = os.path.join(description_share, 'models', 'pal')
+    # Resolve bundled warehouse and PAL model:// URIs before loading worlds.
+    local_model_dirs = [os.path.join(description_share, 'models', name)
+                        for name in ('warehouse', 'pal')]
     model_path = os.environ.get('GAZEBO_MODEL_PATH', '')
     model_entries = [entry for entry in model_path.split(':') if entry]
-    if local_model_dir not in model_entries:
-        os.environ['GAZEBO_MODEL_PATH'] = ':'.join(
-            [local_model_dir, *model_entries])
+    os.environ['GAZEBO_MODEL_PATH'] = ':'.join(
+        local_model_dirs + [p for p in model_entries if p not in local_model_dirs])
 
     default_model = os.path.join(
         description_share, 'urdf', 'fishbot', 'fishbot.urdf.xacro')
@@ -79,7 +78,9 @@ def generate_launch_description():
         package='robot_rl_description',
         executable='ground_truth_odom_tf.py',
         output='screen',
-        parameters=[{'use_sim_time': True}],
+        parameters=[{'use_sim_time': True,
+                     'publish_map_tf': ParameterValue(
+                         LaunchConfiguration('publish_map_tf'), value_type=bool)}],
     )
 
     gazebo = IncludeLaunchDescription(
@@ -130,6 +131,9 @@ def generate_launch_description():
     ]
 
     actions = [
+        DeclareLaunchArgument(
+            'publish_map_tf', default_value='true',
+            description='Publish fixed map->odom only for a world-aligned demo map'),
         DeclareLaunchArgument(
             'model', default_value=default_model,
             description='Absolute path to the robot URDF/Xacro file'),

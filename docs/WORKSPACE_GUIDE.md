@@ -1,5 +1,7 @@
 # robot_rl_myself（FishBot ROS 2 工作区）
 
+> 本文保留原房间与 PAL 操作教程；命令已显式选择原房间及 AMCL。当前默认仓库的介绍、切换和测试见 [主 README](../README.md)。
+
 本项目运行于 Ubuntu 22.04 / ROS 2 Humble，包含 FishBot 的模型与 Gazebo
 Classic 仿真、Nav2 导航、基础导航示例和自动巡检。当前工作区共有 5 个包。
 
@@ -48,20 +50,20 @@ ros2 launch robot_rl_description gazebo_sim.launch.py gui:=false
 启动 Gazebo、生成 FishBot、加载控制器、启动 Nav2 和 RViz：
 
 ```bash
-ros2 launch robot_rl_navigation2 navigation2.launch.py
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl
 ```
 
 常用参数：
 
 ```bash
 # 无图形界面，适合服务器测试
-ros2 launch robot_rl_navigation2 navigation2.launch.py gui:=false use_rviz:=false
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl gui:=false use_rviz:=false
 
 # Gazebo 已在另一个终端运行时，避免重复启动
-ros2 launch robot_rl_navigation2 navigation2.launch.py start_gazebo:=false
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl start_gazebo:=false
 
 # 使用其他地图或世界
-ros2 launch robot_rl_navigation2 navigation2.launch.py \
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl \
   map:=/绝对路径/map.yaml world:=/绝对路径/world.world
 ```
 
@@ -113,10 +115,10 @@ ros2 interface show autopatrol_interfaces/srv/SpeechText
 
 ```bash
 # 终端 1
-ros2 launch robot_rl_navigation2 navigation2.launch.py
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl
 
 # 终端 2
-ros2 launch autopatrol_robot autopatrol.launch.py
+ros2 launch autopatrol_robot autopatrol.launch.py scene:=room
 ```
 
 也可单独运行：
@@ -132,7 +134,7 @@ ros2 run autopatrol_robot patrol_node --ros-args \
 最简单的人工导航只需运行：
 
 ```bash
-ros2 launch robot_rl_navigation2 navigation2.launch.py
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl
 ```
 
 Gazebo 出现机器人且 RViz 的 Nav2 节点激活后，可直接在 RViz 设置目标点。
@@ -178,7 +180,7 @@ PAL 世界不附带占据栅格地图。首次使用布局不同的世界时，�
 
 ```bash
 PAL_WORLD=/home/archer/robot_rl_myself/install/robot_rl_description/share/robot_rl_description/world/pal
-ros2 launch robot_rl_navigation2 navigation2.launch.py \
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl \
   world:=$PAL_WORLD/empty_room.world slam:=true
 ```
 
@@ -207,7 +209,7 @@ source install/setup.bash
 ```bash
 PAL_WORLD=/home/archer/robot_rl_myself/install/robot_rl_description/share/robot_rl_description/world/pal
 NAV_MAP=/home/archer/robot_rl_myself/install/robot_rl_navigation2/share/robot_rl_navigation2/maps
-ros2 launch robot_rl_navigation2 navigation2.launch.py \
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl \
   world:=$PAL_WORLD/empty_room.world \
   map:=$NAV_MAP/pal_empty_room.yaml
 ```
@@ -246,7 +248,7 @@ ros2 pkg prefix robot_rl_navigation2
 ```bash
 PAL_WORLD=/home/archer/robot_rl_myself/install/robot_rl_description/share/robot_rl_description/world/pal
 
-ros2 launch robot_rl_navigation2 navigation2.launch.py \
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl \
   world:=$PAL_WORLD/home.world \
   slam:=true \
   spawn_x:=0.0 spawn_y:=0.0 spawn_z:=0.15 spawn_yaw:=0.0
@@ -328,7 +330,7 @@ source install/setup.bash
 PAL_WORLD=/home/archer/robot_rl_myself/install/robot_rl_description/share/robot_rl_description/world/pal
 NAV_MAP=/home/archer/robot_rl_myself/install/robot_rl_navigation2/share/robot_rl_navigation2/maps
 
-ros2 launch robot_rl_navigation2 navigation2.launch.py \
+ros2 launch robot_rl_navigation2 navigation2.launch.py scene:=room localization:=amcl \
   world:=$PAL_WORLD/home.world \
   map:=$NAV_MAP/pal_home.yaml \
   spawn_x:=0.0 spawn_y:=0.0 spawn_z:=0.15 spawn_yaw:=0.0

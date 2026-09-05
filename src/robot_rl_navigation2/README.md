@@ -6,7 +6,7 @@
 ros2 launch robot_rl_navigation2 navigation2.launch.py
 ```
 
-新终端已通过 `~/.bashrc` 自动加载 ROS 2 和工作空间。不要重复执行这条 launch；
+每个新终端先加载 ROS 2 和本工作区的 `install/setup.bash`。默认启动仓库；`scene:=room` 切回原房间。不要重复执行这条 launch；
 启动文件会检测 Gazebo 11345 端口，防止第二套 Nav2/RViz 误连旧仿真。
 
 ## 本次问题的真实原因
@@ -31,8 +31,11 @@ AMCL 无法用激光一次修正数米误差，最终 `map→odom→base_link` �
 
 ## 当前定位与 TF 架构
 
-本项目默认是 Gazebo 仿真，并且 `custom_room.world` 与 `room.yaml` 使用相同米制坐标。
-因此导航采用仿真 ground-truth 定位：
+仓库默认使用 AMCL：`map → odom` 由 AMCL 发布，`odom → base_footprint` 由仿真真值里程计桥接节点发布。外部地图可以通过 `initial_x/initial_y/initial_yaw` 或 RViz 的 `2D Pose Estimate` 初始化。
+
+`slam:=true` 时固定 map TF 自动关闭，由 SLAM 发布 `map → odom`。
+
+以下 ground-truth 说明适用于 **`scene:=room`**（或显式 `localization:=ground_truth`）。原来的 `custom_room.world` 与 `room.yaml` 使用相同米制坐标：
 
 ```text
 map --ground_truth_odom_tf(identity)--> odom
@@ -92,8 +95,7 @@ ros2 run tf2_ros tf2_echo base_link laser_link
 ros2 topic echo /scan --once
 ```
 
-不要用 RViz 的 `2D Pose Estimate` 修正默认仿真真值模式；它只会改变 AMCL 粒子，
-不会改变 ground-truth TF。如果换成真实机器人模式，才由 AMCL 初始位姿负责定位。
+仓库 AMCL 模式可用 `2D Pose Estimate` 修正定位。原房间 ground-truth 模式中，该工具只改变 AMCL 粒子，不改变固定 TF。
 
 ## 目标点与“停住”的判断
 
@@ -119,7 +121,7 @@ ros2 lifecycle get /controller_server
 ```bash
 ros2 launch robot_rl_navigation2 navigation2.launch.py \
   world:=/绝对路径/example.world \
-  map:=/绝对路径/example.yaml
+  map:=/绝对路径/example.yaml localization:=amcl
 ```
 
 ground-truth identity 定位要求新地图坐标原点与 Gazebo world 坐标一致。如果地图由
@@ -141,7 +143,7 @@ AMCL 和 ground_truth 节点发布 `map→odom`。
 .backups/nav2_algorithm_upgrade_20260716/
 ```
 
-## 实际验收结果（2026-07-16）
+## 原房间历史验收结果（2026-07-16）
 
 - `planner_server` active，实际加载 `nav2_smac_planner/SmacPlanner2D`；
 - `controller_server` active，实际加载
@@ -155,3 +157,8 @@ AMCL 和 ground_truth 节点发布 `map→odom`。
 - 最终目标后 Gazebo、`/odom` 与 `map→base_footprint` 均约为
   `(0.383, -0.011)`，坐标一致；同期 `/wheel_odom` 约为
   `(0.382, -0.014)`，仅作为轮滑诊断数据。
+
+## 仓库集成
+
+详细世界/地图介绍、场景切换与巡检命令见 [工作区 README](../../README.md)。
+仓库实测记录见 [测试报告](../../docs/WAREHOUSE_TEST_REPORT.md)。

@@ -1,0 +1,41 @@
+{
+  "map": {
+    "width": 318,
+    "height": 439,
+    "resolution": 0.05000000074505806
+  },
+  "camera": {
+    "width": 640,
+    "height": 480,
+    "encoding": "rgb8"
+  },
+  "scan": {
+    "beams": 360,
+    "finite_returns": 262
+  },
+  "odom_start": [
+    3.351755001618738e-05,
+    -3.4940405262788193e-06,
+    0.036224640159092714
+  ],
+  "lifecycle": {
+    "map_server": "active",
+    "amcl": "active",
+    "planner_server": "active",
+    "controller_server": "active",
+    "bt_navigator": "active"
+  },
+  "map_pose": [
+    7.04955545305722e-06,
+    -1.3021280838196942e-08
+  ],
+  "plan": {
+    "status": 4,
+    "poses": 21
+  },
+  "navigation_status": 4,
+  "odom_end": [
+    0.8830307005204541,
+    -0.016383542904249798
+  ]
+}

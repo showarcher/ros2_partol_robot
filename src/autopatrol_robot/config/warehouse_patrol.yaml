@@ -1,0 +1,14 @@
+# Map coordinates, metres and radians. Matching world: small_warehouse.world.
+# Inspect station approaches with FishBot before running unattended loops.
+patrol_node:
+  ros__parameters:
+    initial_point: [0.0, 0.0, 0.0]
+    target_points: [
+      -3.678, 9.3, 1.5708,   # Dock area
+      1.803, 9.3, 1.5708,    # Loading area
+      1.801, -9.0, -1.5708,  # Inventory area
+      -3.630, -9.3, -1.5708, # Dispatch area
+      0.0, 0.0, 0.0         # Return to spawn area
+    ]
+    img_save_path: "/tmp/autopatrol_warehouse_images"
+    use_sim_time: true
