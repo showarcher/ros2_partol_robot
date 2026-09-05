@@ -212,7 +212,7 @@ ros2 interface show autopatrol_interfaces/srv/SpeechText
 - [地图说明](src/robot_rl_navigation2/maps/README.md)
 - [地图、TF 与相机修复记录](NAV2_MAP_TF_CAMERA_FIX_REPORT.md)
 
-项目使用 ROS 2、Nav2、Gazebo 与 PAL 场景资源。README 的章节组织参考了 [Sara-Esm 的自主仓库导航项目](https://github.com/Sara-Esm/ros2-autonomous-warehouse-navigation)。各源码包和第三方资源的许可声明请查阅对应文件；部分包的许可字段仍待完善。
+项目使用 ROS 2、Nav2、Gazebo 与 PAL 场景资源。各源码包和第三方资源的许可声明请查阅对应文件；部分包的许可字段仍待完善。
 
 <div align="center">
 
